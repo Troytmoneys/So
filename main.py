@@ -89,15 +89,16 @@ final_embed = discord.Embed(
 await interaction.followup.send(embed=final_embed, ephemeral=True)
 
 # Command to view profile
+# Command to view profile
 @bot.command(name='profile')
 async def profile(ctx):
-user_coffees = user_data.get(ctx.author.id, {}).get('coffees', [])
-if user_coffees:
-    description = "\n".join(f"{c['type']}: Beans {c['beans']}, Milk {'Yes' if c['milk'] else 'No'}" for c in user_coffees)
-    embed = discord.Embed(title=f"{ctx.author.display_name}'s Coffee History", description=description, color=0x0000ff)
-else:
-    embed = discord.Embed(title="No Coffee History", description="You haven't made any coffee yet!", color=0xff0000)
-await ctx.send(embed=embed)
+    user_coffees = user_data.get(ctx.author.id, {}).get('coffees', [])
+    if user_coffees:
+        description = "\n".join(f"{c['type']}: Beans {c['beans']}, Milk {'Yes' if c['milk'] else 'No'}" for c in user_coffees)
+        embed = discord.Embed(title=f"{ctx.author.display_name}'s Coffee History", description=description, color=0x0000ff)
+    else:
+        embed = discord.Embed(title="No Coffee History", description="You haven't made any coffee yet!", color=0xff0000)
+    await ctx.send(embed=embed)
 
 # Command to view leaderboard
 @bot.command(name='leaderboard')
