@@ -74,19 +74,19 @@ async def beans_selection_callback(interaction, coffee_data, beans, user):
     await interaction.followup.send(embed=embed, view=view, ephemeral=True)
 
 async def milk_selection_callback(interaction, coffee_data, milk, user):
-    # Update coffee data
-    coffee_data['milk'] = milk
-milk_status = "with milk" if milk else "without milk"
-embed = discord.Embed(title="Milk Added", description=f"Milk has been added: {milk_status}.", color=0x0000ff)
-await interaction.response.edit_message(embed=embed, view=None)
+  # Update coffee data
+  coffee_data['milk'] = milk
+  milk_status = "with milk" if milk else "without milk"
+  embed = discord.Embed(title="Milk Added", description=f"Milk has been added: {milk_status}.", color=0x0000ff)
+  await interaction.response.edit_message(embed=embed, view=None)
 
-# Confirm final selection
-final_embed = discord.Embed(
-    title="Coffee Ready",
-    description=f"Your {coffee_data['type']} {milk_status} and {coffee_data['beans']} beans is ready!",
-    color=0x00ff00
-)
-await interaction.followup.send(embed=final_embed, ephemeral=True)
+  # Confirm final selection
+  final_embed = discord.Embed(
+      title="Coffee Ready",
+      description=f"Your {coffee_data['type']} {milk_status} and {coffee_data['beans']} beans is ready!",
+      color=0x00ff00
+  )
+  await interaction.followup.send(embed=final_embed, ephemeral=True)
 
 # Command to view profile
 # Command to view profile
@@ -98,29 +98,28 @@ async def profile(ctx):
         embed = discord.Embed(title=f"{ctx.author.display_name}'s Coffee History", description=description, color=0x0000ff)
     else:
         embed = discord.Embed(title="No Coffee History", description="You haven't made any coffee yet!", color=0xff0000)
-    await ctx.send(embed=embed)
-
+    await ctx.send(embed="Command to view leaderboard")
 # Command to view leaderboard
 @bot.command(name='leaderboard')
 async def leaderboard(ctx):
-# Generate leaderboard from user data
-leaderboard_data = {user_id: len(data['coffees']) for user_id, data in user_data.items()}
-sorted_leaderboard = sorted(leaderboard_data.items(), key=lambda x: x[1], reverse=True)[:10]
+    # Generate leaderboard from user data
+    leaderboard_data = {user_id: len(data['coffees']) for user_id, data in user_data.items()}
+    sorted_leaderboard = sorted(leaderboard_data.items(), key=lambda x: x[1], reverse=True)[:10]
 
-# Format leaderboard message
-leaderboard_entries = []
-for user_id, count in sorted_leaderboard:
-    user = await bot.fetch_user(user_id)
-    leaderboard_entries.append(f"{user.display_name}: {count} coffees")
+    # Format leaderboard message
+    leaderboard_entries = []
+    for user_id, count in sorted_leaderboard:
+        user = await bot.fetch_user(user_id)
+        leaderboard_entries.append(f"{user.display_name}: {count} coffees")
 
-description = "\n".join(leaderboard_entries)
-embed = discord.Embed(title="Coffee Leaderboard", description=description, color=0x00ff00)
-await ctx.send(embed=embed)
+    description = "\n".join(leaderboard_entries)
+    embed = discord.Embed(title="Coffee Leaderboard", description=description, color=0x00ff00)
+    await ctx.send(embed=embed)
 
 # Command to ping
 @bot.command(name='ping')
 async def ping(ctx):
-await ctx.send(f'Pong! {round(bot.latency * 1000)}ms')
+  await ctx.send(f'Pong! {round(bot.latency * 1000)}ms')
 
 # Run the bot
 bot.run('your_bot_token')
